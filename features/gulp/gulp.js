@@ -5,29 +5,49 @@ var gulp = require('gulp'),
     extend = require('extend'),
     allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js'));
 
+process.env.START_GULP = 'true';
+
 allonsy.bootstrap({
   owner: 'gulp'
 }, function() {
 
   var gulpFiles = allonsy.findInFeaturesSync('*-gulpfile.js'),
   defaultTasks = [],
-  watchs = [];
-
-  gulpFiles = [];
+  watch = [],
+  afters = [];
 
   gulpFiles.forEach(function(gulpFile) {
-    var tasks = require(gulpFile)(gulp, extend(true, [], defaultTasks));
+    var gulpModule = require(path.resolve(gulpFile)),
+        tasks = DependencyInjection.injector.controller.invoke(null, gulpModule, {
+          controller: {
+            $allonsy: function() {
+              return allonsy;
+            },
+
+            $gulp: function() {
+              return gulp;
+            },
+
+            $default: function() {
+              return extend(true, [], defaultTasks);
+            }
+          }
+        });
 
     if (tasks && typeof tasks == 'string') {
       tasks = [tasks];
     }
     else if (tasks && typeof tasks == 'object') {
       if (Object.prototype.toString.call(tasks) == '[object Object]') {
+        if (tasks.after) {
+          afters.push(tasks.after);
+        }
+
         if (tasks.watch && tasks.task) {
           var watch = tasks.watch,
               task = tasks.task;
 
-          watchs.push(function() {
+          watch.push(function() {
             gulp.watch(watch, [task]);
           });
         }
@@ -49,15 +69,41 @@ allonsy.bootstrap({
     }
   });
 
-  if (watchs.length) {
-    gulp.task('watch', function() {
-      watchs.forEach(function(watchFunc) {
-        watchFunc();
+  if (process.env.START_GULP == 'true') {
+    if (process.env.WATCHER && process.env.watcher == 'true' && watch.length) {
+      gulp.task('watch', function() {
+        watch.forEach(function(watchFunc) {
+          watchFunc();
+        });
       });
-    });
 
-    defaultTasks.push('watch');
+      defaultTasks.push('watch');
+    }
+
+    gulp.task('default', defaultTasks);
   }
 
-  gulp.task('default', defaultTasks);
+  if (afters.length) {
+    afters.forEach(function(after) {
+      DependencyInjection.injector.controller.invoke(null, after, {
+        controller: {
+          $allonsy: function() {
+            return allonsy;
+          },
+
+          $gulp: function() {
+            return gulp;
+          },
+
+          $watch: function() {
+            return watch;
+          },
+
+          $default: function() {
+            return extend(true, [], defaultTasks);
+          }
+        }
+      });
+    });
+  }
 });

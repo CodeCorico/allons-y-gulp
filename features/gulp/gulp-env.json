@@ -1,0 +1,7 @@
+{
+  "env": [{
+    "type": "confirm",
+    "name": "WATCHER",
+    "message": "Enable the Gulp watcher:"
+  }]
+}
