@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     extend = require('extend'),
     allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js'));
 
-process.env.START_GULP = 'true';
+process.env.GULP_START = 'true';
 
 allonsy.bootstrap({
   owner: 'gulp'
@@ -16,18 +16,14 @@ allonsy.bootstrap({
   watch = [],
   afters = [];
 
+  DependencyInjection.service('$gulp', [function() {
+    return gulp;
+  }]);
+
   gulpFiles.forEach(function(gulpFile) {
     var gulpModule = require(path.resolve(gulpFile)),
         tasks = DependencyInjection.injector.controller.invoke(null, gulpModule, {
           controller: {
-            $allonsy: function() {
-              return allonsy;
-            },
-
-            $gulp: function() {
-              return gulp;
-            },
-
             $default: function() {
               return extend(true, [], defaultTasks);
             }
@@ -70,8 +66,8 @@ allonsy.bootstrap({
     }
   });
 
-  if (process.env.START_GULP == 'true') {
-    if (process.env.WATCHER && process.env.watcher == 'true' && watch.length) {
+  if (process.env.GULP_START == 'true') {
+    if (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' && watch.length) {
       gulp.task('watch', function() {
         watch.forEach(function(watchFunc) {
           watchFunc();
@@ -88,14 +84,6 @@ allonsy.bootstrap({
     afters.forEach(function(after) {
       DependencyInjection.injector.controller.invoke(null, after, {
         controller: {
-          $allonsy: function() {
-            return allonsy;
-          },
-
-          $gulp: function() {
-            return gulp;
-          },
-
           $watch: function() {
             return watch;
           },

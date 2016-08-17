@@ -5,5 +5,5 @@ module.exports = {
   enabled: !process.env.GULP || process.env.GULP == 'true' || false,
   spawn: true,
   spawnCommands: ['node', 'node_modules/gulp/bin/gulp'],
-  spawnMaxRestarts: process.env.WATCHER && process.env.WATCHER == 'true' ? 10 : 1
+  spawnMaxRestarts: process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' ? 10 : 1
 };

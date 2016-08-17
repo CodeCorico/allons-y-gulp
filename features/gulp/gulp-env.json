@@ -5,7 +5,7 @@
     "message": "Enable Gulp:"
   }, {
     "type": "confirm",
-    "name": "WATCHER",
+    "name": "GULP_WATCHER",
     "message": "Enable the Gulp watcher:"
   }]
 }
