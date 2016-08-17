@@ -3,13 +3,10 @@
 *.node_modules
 *node_modules
 *.DS_Store
-pids
 *.seed
 lib-cov
 coverage
-build/Release
 .lock-wscript
-.env
 Thumbs.db
 .idea/*
 *.orig
