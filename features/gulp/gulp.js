@@ -34,10 +34,14 @@ allonsy.bootstrap({
           }
         });
 
-    if (tasks && typeof tasks == 'string') {
+    if (!tasks) {
+      return;
+    }
+
+    if (typeof tasks == 'string') {
       tasks = [tasks];
     }
-    else if (tasks && typeof tasks == 'object') {
+    else if (typeof tasks == 'object') {
       if (Object.prototype.toString.call(tasks) == '[object Object]') {
         if (tasks.after) {
           afters.push(tasks.after);
@@ -59,9 +63,6 @@ allonsy.bootstrap({
           tasks = null;
         }
       }
-    }
-    else {
-      return;
     }
 
     if (tasks && tasks.length) {
