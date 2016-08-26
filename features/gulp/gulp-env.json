@@ -6,6 +6,8 @@
   }, {
     "type": "confirm",
     "name": "GULP_WATCHER",
-    "message": "Enable the Gulp watcher:"
+    "message": "Enable the Gulp watcher:",
+    "default": false,
+    "when": "GULP=true"
   }]
 }
