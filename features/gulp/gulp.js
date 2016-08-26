@@ -12,9 +12,9 @@ allonsy.bootstrap({
 }, function() {
 
   var gulpFiles = allonsy.findInFeaturesSync('*-gulpfile.js'),
-  defaultTasks = [],
-  watch = [],
-  afters = [];
+      defaultTasks = [],
+      watchs = [],
+      afters = [];
 
   DependencyInjection.service('$gulp', [function() {
     return gulp;
@@ -44,10 +44,10 @@ allonsy.bootstrap({
         }
 
         if (tasks.watch && tasks.task) {
-          var watch = tasks.watch,
+          var watch = (typeof tasks.watch == 'string' ? [tasks.watch] : tasks.watch) || [],
               task = tasks.task;
 
-          watch.push(function() {
+          watchs.push(function() {
             gulp.watch(watch, [task]);
           });
         }
@@ -67,9 +67,9 @@ allonsy.bootstrap({
   });
 
   if (process.env.GULP_START == 'true') {
-    if (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' && watch.length) {
+    if (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' && watchs.length) {
       gulp.task('watch', function() {
-        watch.forEach(function(watchFunc) {
+        watchs.forEach(function(watchFunc) {
           watchFunc();
         });
       });
@@ -84,8 +84,8 @@ allonsy.bootstrap({
     afters.forEach(function(after) {
       DependencyInjection.injector.controller.invoke(null, after, {
         controller: {
-          $watch: function() {
-            return watch;
+          $watchs: function() {
+            return watchs;
           },
 
           $default: function() {
