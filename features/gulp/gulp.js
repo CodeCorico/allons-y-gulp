@@ -14,11 +14,13 @@ allonsy.bootstrap({
   var gulpFiles = allonsy.findInFeaturesSync('*-gulpfile.js'),
       defaultTasks = [],
       watchs = [],
-      afters = [];
+      afters = [],
+      lessPaths = [],
+      lessPlugins = [];
 
-  DependencyInjection.service('$gulp', [function() {
+  DependencyInjection.service('$gulp', function() {
     return gulp;
-  }]);
+  });
 
   gulpFiles.forEach(function(gulpFile) {
     var gulpModule = require(path.resolve(gulpFile)),
@@ -26,6 +28,14 @@ allonsy.bootstrap({
           controller: {
             $default: function() {
               return extend(true, [], defaultTasks);
+            },
+
+            $lessPaths: function() {
+              return lessPaths;
+            },
+
+            $lessPlugins: function() {
+              return lessPlugins;
             }
           }
         });
@@ -41,6 +51,14 @@ allonsy.bootstrap({
       if (Object.prototype.toString.call(tasks) == '[object Object]') {
         if (tasks.after) {
           afters.push(tasks.after);
+        }
+
+        if (tasks.lessPaths) {
+          lessPaths = lessPaths.concat(tasks.lessPaths);
+        }
+
+        if (tasks.lessPlugins) {
+          lessPlugins = lessPlugins.concat(tasks.lessPlugins);
         }
 
         if (tasks.watch && tasks.task) {
@@ -86,6 +104,14 @@ allonsy.bootstrap({
         controller: {
           $watchs: function() {
             return watchs;
+          },
+
+          $lessPaths: function() {
+            return lessPaths;
+          },
+
+          $lessPlugins: function() {
+            return lessPlugins;
           },
 
           $default: function() {
