@@ -5,11 +5,21 @@ var gulp = require('gulp'),
     extend = require('extend'),
     allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js'));
 
+require(path.resolve(__dirname, 'gulp-dist.js'))(allonsy, gulp);
+
 process.env.GULP_START = 'true';
+
+console.log('');
+
+DependencyInjection.service('$gulp', function() {
+  return gulp;
+});
 
 allonsy.bootstrap({
   owner: 'gulp'
 }, function() {
+
+  gulp.cleanDists();
 
   var gulpFiles = allonsy.findInFeaturesSync('*-gulpfile.js'),
       defaultTasks = [],
@@ -17,10 +27,6 @@ allonsy.bootstrap({
       afters = [],
       lessPaths = [],
       lessPlugins = [];
-
-  DependencyInjection.service('$gulp', function() {
-    return gulp;
-  });
 
   gulpFiles.forEach(function(gulpFile) {
     var gulpModule = require(path.resolve(gulpFile)),
@@ -47,36 +53,31 @@ allonsy.bootstrap({
     if (typeof tasks == 'string') {
       tasks = [tasks];
     }
-    else if (typeof tasks == 'object') {
-      if (Object.prototype.toString.call(tasks) == '[object Object]') {
-        if (tasks.after) {
-          afters.push(tasks.after);
-        }
+    else if (typeof tasks == 'object' && !Array.isArray(tasks)) {
+      tasks.tasks = typeof tasks.tasks == 'string' ? [tasks.tasks] : tasks.tasks;
 
-        if (tasks.lessPaths) {
-          lessPaths = lessPaths.concat(tasks.lessPaths);
-        }
-
-        if (tasks.lessPlugins) {
-          lessPlugins = lessPlugins.concat(tasks.lessPlugins);
-        }
-
-        if (tasks.watch && tasks.task) {
-          var watch = (typeof tasks.watch == 'string' ? [tasks.watch] : tasks.watch) || [],
-              task = tasks.task;
-
-          watchs.push(function() {
-            gulp.watch(watch, [task]);
-          });
-        }
-
-        if (tasks.task) {
-          tasks = [tasks.task];
-        }
-        else {
-          tasks = null;
-        }
+      if (tasks.after) {
+        afters.push(tasks.after);
       }
+
+      if (tasks.lessPaths) {
+        lessPaths = lessPaths.concat(tasks.lessPaths);
+      }
+
+      if (tasks.lessPlugins) {
+        lessPlugins = lessPlugins.concat(tasks.lessPlugins);
+      }
+
+      if (tasks.watch && tasks.tasks && tasks.tasks.length) {
+        var watch = (typeof tasks.watch == 'string' ? [tasks.watch] : tasks.watch) || [],
+            gulpTasks = tasks.tasks;
+
+        watchs.push(function() {
+          gulp.watch(watch, gulpTasks);
+        });
+      }
+
+      tasks = tasks.tasks || null;
     }
 
     if (tasks && tasks.length) {
