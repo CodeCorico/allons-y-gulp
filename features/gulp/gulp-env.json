@@ -9,5 +9,11 @@
     "message": "Enable the Gulp watcher:",
     "default": false,
     "when": "GULP=true"
+  }, {
+    "type": "confirm",
+    "name": "GULP_OUTPUT",
+    "message": "Display the Gulp logs:",
+    "default": false,
+    "when": "GULP=true"
   }]
 }

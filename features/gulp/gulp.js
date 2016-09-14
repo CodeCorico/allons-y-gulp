@@ -5,11 +5,12 @@ var gulp = require('gulp'),
     extend = require('extend'),
     allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js'));
 
+gulp.defaultTasksCount = 1 + (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' ? 1 : 0);
+
+require(path.resolve(__dirname, 'gulp-output.js'))(allonsy, gulp);
 require(path.resolve(__dirname, 'gulp-dist.js'))(allonsy, gulp);
 
 process.env.GULP_START = 'true';
-
-console.log('');
 
 DependencyInjection.service('$gulp', function() {
   return gulp;
@@ -84,6 +85,8 @@ allonsy.bootstrap({
       defaultTasks = defaultTasks.concat(tasks);
     }
   });
+
+  gulp.defaultTasksCount += defaultTasks.length;
 
   if (process.env.GULP_START == 'true') {
     if (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' && watchs.length) {
