@@ -69,9 +69,19 @@ allonsy.bootstrap({
         lessPlugins = lessPlugins.concat(tasks.lessPlugins);
       }
 
-      if (tasks.watch && tasks.tasks && tasks.tasks.length) {
-        var watch = (typeof tasks.watch == 'string' ? [tasks.watch] : tasks.watch) || [],
-            gulpTasks = tasks.tasks;
+      var watch = tasks.watch;
+
+      if (typeof watch == 'object' && !Array.isArray(watch)) {
+        Object.keys(watch).forEach(function(watchTask) {
+          watchs.push(function() {
+            gulp.watch(watch[watchTask], [watchTask]);
+          });
+        });
+      }
+      else if (watch && tasks.tasks && tasks.tasks.length) {
+        watch = (typeof watch == 'string' ? [watch] : watch) || [];
+
+        var gulpTasks = tasks.tasks;
 
         watchs.push(function() {
           gulp.watch(watch, gulpTasks);
