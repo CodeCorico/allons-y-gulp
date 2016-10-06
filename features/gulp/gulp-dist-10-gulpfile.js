@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function($allonsy, $gulp, $default) {
+module.exports = function($glob, $gulp, $default) {
 
   var fs = require('fs-extra'),
       excludesPaterns = $gulp.excludeDist();
@@ -8,7 +8,7 @@ module.exports = function($allonsy, $gulp, $default) {
   $gulp.task('gulp-dist', $default, function(done) {
 
     excludesPaterns.forEach(function(excludesPatern) {
-      $allonsy.glob.sync(excludesPatern).forEach(function(file) {
+      $glob.sync(excludesPatern).forEach(function(file) {
         fs.removeSync(file);
       });
     });
