@@ -18,7 +18,7 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
-    "allons-y": "^1.0.0",
+    "allons-y": "^1.0.1",
     "allons-y-dotenv": "^1.0.0",
     "async": "^2.0.1",
     "extend": "^3.0.0",
