@@ -24,6 +24,10 @@ module.exports = function(allonsy, gulp) {
   };
 
   gulp.cleanDists = function() {
+    if (!process.env.GULP_CLEAN_DEST || process.env.GULP_CLEAN_DEST == 'false') {
+      return;
+    }
+
     _distPaths.forEach(function(distPath) {
       if (!_distObject[distPath]) {
         return;

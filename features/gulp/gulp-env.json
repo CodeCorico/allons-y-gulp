@@ -12,7 +12,13 @@
   }, {
     "type": "confirm",
     "name": "GULP_OUTPUT",
-    "message": "Display the Gulp logs:",
+    "message": "Display the detailled Gulp logs:",
+    "default": false,
+    "when": "GULP=true"
+  }, {
+    "type": "confirm",
+    "name": "GULP_CLEAN_DEST",
+    "message": "Clean the Gulp destination folders at start:",
     "default": false,
     "when": "GULP=true"
   }]

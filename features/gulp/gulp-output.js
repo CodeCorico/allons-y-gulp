@@ -9,11 +9,6 @@ module.exports = function(allonsy, gulp) {
     (!process.env.ALLONSY_LIVE_COMMANDS || process.env.ALLONSY_LIVE_COMMANDS == 'true')
   ) {
     process.stdout.write = function(output) {
-      allonsy.sendMessage({
-        event: 'update(gulp/output)',
-        output: output
-      });
-
       var taskIsStarting = output.indexOf('Starting \'') > -1,
           taskIsFinished = output.indexOf('Finished \'') > -1;
 
