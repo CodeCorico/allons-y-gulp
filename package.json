@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "Start Gulp in the allons-y way.",
   "license": "MIT",
-  "homepage": "http://allons-y.io",
+  "homepage": "https://allons-y.io",
   "author": "CodeCorico <hello@codecorico.com>",
   "bugs": "https://github.com/CodeCorico/allons-y-gulp/issues",
   "repository": {
@@ -17,8 +17,11 @@
   "scripts": {
     "postinstall": "node scripts/postinstall.js"
   },
+  "devDependencies": {
+    "allons-y-dev-chore": "^1.0.0"
+  },
   "dependencies": {
-    "allons-y": "^1.0.1",
+    "allons-y": "^1.0.2",
     "allons-y-dotenv": "^1.0.0",
     "async": "^2.0.1",
     "extend": "^3.0.0",
