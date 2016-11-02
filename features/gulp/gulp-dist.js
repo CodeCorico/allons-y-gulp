@@ -24,7 +24,7 @@ module.exports = function(allonsy, gulp) {
   };
 
   gulp.cleanDists = function() {
-    if (!process.env.GULP_CLEAN_DEST || process.env.GULP_CLEAN_DEST == 'false') {
+    if (!process.env.GULP_CLEAN_DIST || process.env.GULP_CLEAN_DIST == 'false') {
       return;
     }
 

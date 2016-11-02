@@ -17,8 +17,8 @@
     "when": "GULP=true"
   }, {
     "type": "confirm",
-    "name": "GULP_CLEAN_DEST",
-    "message": "Clean the Gulp destination folders at start:",
+    "name": "GULP_CLEAN_DIST",
+    "message": "Clean the Gulp distribution folders at start:",
     "default": false,
     "when": "GULP=true"
   }]
