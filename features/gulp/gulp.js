@@ -3,9 +3,10 @@
 var gulp = require('gulp'),
     path = require('path'),
     extend = require('extend'),
-    allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js'));
+    allonsy = require(path.resolve(__dirname, '../../../allons-y/features/allons-y/allons-y.js')),
+    useWatcher = process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true';
 
-gulp.defaultTasksCount = 1 + (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' ? 1 : 0);
+gulp.defaultTasksCount = 1 + (useWatcher ? 1 : 0);
 
 require(path.resolve(__dirname, 'gulp-output.js'))(allonsy, gulp);
 require(path.resolve(__dirname, 'gulp-dist.js'))(allonsy, gulp);
@@ -99,8 +100,8 @@ allonsy.bootstrap({
   gulp.defaultTasksCount += defaultTasks.length;
 
   if (process.env.GULP_START == 'true') {
-    if (process.env.GULP_WATCHER && process.env.GULP_WATCHER == 'true' && watchs.length) {
-      gulp.task('watch', function() {
+    if (useWatcher && watchs.length) {
+      gulp.task('watch', extend([], defaultTasks), function() {
         watchs.forEach(function(watchFunc) {
           watchFunc();
         });
