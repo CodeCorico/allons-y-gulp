@@ -110,7 +110,11 @@ allonsy.bootstrap({
       defaultTasks.push('watch');
     }
 
-    gulp.task('default', defaultTasks);
+    gulp.task('default', defaultTasks, function() {
+      if (!useWatcher || !watchs.length) {
+        process.nextTick(process.exit);
+      }
+    });
   }
 
   if (afters.length) {
