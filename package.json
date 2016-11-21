@@ -1,6 +1,6 @@
 {
   "name": "allons-y-gulp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Start Gulp in the allons-y way.",
   "license": "MIT",
   "homepage": "https://allons-y.io",
@@ -21,7 +21,7 @@
     "allons-y-dev-chore": "^1.0.0"
   },
   "dependencies": {
-    "allons-y": "^1.0.2",
+    "allons-y": "^1.0.3",
     "allons-y-dotenv": "^1.0.0",
     "async": "^2.0.1",
     "extend": "^3.0.0",

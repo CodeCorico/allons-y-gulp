@@ -1,3 +1,10 @@
+<a name="1.0.4"></a>
+# [1.0.4](https://github.com/CodeCorico/allons-y-gulp/compare/1.0.3...1.0.4) (2016-11-21)
+
+### Bug Fixes
+* **gulp allons-y start:** don't restat gulp when no watcher [#7e93f69](https://github.com/CodeCorico/allons-y-gulp/commit/7e93f69)
+* **gulp:** exit the process after the default task when no watcher [#611d968](https://github.com/CodeCorico/allons-y-gulp/commit/611d968)
+
 <a name="1.0.3"></a>
 # [1.0.3](https://github.com/CodeCorico/allons-y-gulp/compare/1.0.2...1.0.3) (2016-11-02)
 
