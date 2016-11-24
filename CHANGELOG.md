@@ -1,3 +1,9 @@
+<a name="1.0.5"></a>
+# [1.0.5](https://github.com/CodeCorico/allons-y-gulp/compare/1.0.4...1.0.5) (2016-11-24)
+
+### Bug Fixes
+* **gulp allons-y start:** set the restart to 1 [#cdcd2de](https://github.com/CodeCorico/allons-y-gulp/commit/cdcd2de)
+
 <a name="1.0.4"></a>
 # [1.0.4](https://github.com/CodeCorico/allons-y-gulp/compare/1.0.3...1.0.4) (2016-11-21)
 
