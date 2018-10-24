@@ -15,7 +15,9 @@
     "npm": ">=3.2"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "allons-y-dev-chore": "^1.0.0"
@@ -26,7 +28,9 @@
     "async": "^2.0.1",
     "extend": "^3.0.0",
     "fs-extra": "^0.30.0",
-    "gulp": "^3.9.1",
-    "through2": "^2.0.1"
-  }
+    "gulp": "^4.0.0",
+    "through2": "^2.0.1",
+    "snyk": "^1.104.2"
+  },
+  "snyk": true
 }
